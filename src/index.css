@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Playfair Display Variable", ui-serif, Georgia, serif;
+  --color-night: #16101a;
+  --color-night-raised: #211827;
+  --color-gold: #e2b877;
+  /* Mercado Pago brand blue, used only on its payment button. */
+  --color-mp: #0a6cb4;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  background-color: var(--color-night);
+}
+
+#root {
+  display: flex;
+  min-height: 100dvh;
+  flex-direction: column;
+}
