@@ -38,10 +38,10 @@ const EMAIL_PATTERN = /^\S+@\S+\.\S+$/;
 const AFTERNOON_START = "12:00";
 
 const INPUT_CLASS =
-  "min-h-12 w-full rounded-xl border border-white/15 bg-white/5 px-4 text-base text-white outline-none transition-colors focus:border-(--accent)";
+  "min-h-12 w-full rounded-xl border border-ink/15 bg-ink/5 px-4 text-base text-ink outline-none transition-colors focus:border-(--accent)";
 
 const STRIP_ARROW_CLASS =
-  "flex size-12 items-center justify-center rounded-xl border border-white/20 text-white transition-colors hover:border-white/50";
+  "flex size-12 items-center justify-center rounded-xl border border-ink/20 text-ink transition-colors hover:border-ink/50";
 
 /** Booking step: pick a day and a free time, then fill in the customer details. */
 export function BookingForm({
@@ -143,7 +143,7 @@ export function BookingForm({
               >
                 ¿Cuándo querés venir?
               </h1>
-              <p className="text-sm text-white/60">
+              <p className="text-sm text-ink/60">
                 Mostramos solo los horarios libres. Duración:{" "}
                 {service.durationMin} min.
               </p>
@@ -184,10 +184,10 @@ export function BookingForm({
                     aria-pressed={isSelected}
                     disabled={!hasSlots}
                     onClick={() => handleSelectDate(day.date)}
-                    className={`flex min-h-20 w-24 flex-col items-center justify-center rounded-2xl border text-sm transition-colors disabled:cursor-not-allowed disabled:border-white/5 disabled:text-white/30 ${
+                    className={`flex min-h-20 w-24 flex-col items-center justify-center rounded-2xl border text-sm transition-colors disabled:cursor-not-allowed disabled:border-ink/5 disabled:text-ink/30 ${
                       isSelected
-                        ? "border-(--accent) bg-(--accent) text-night"
-                        : "border-white/15 bg-night-raised text-white hover:border-white/40"
+                        ? "border-(--accent) bg-(--accent) text-ink"
+                        : "border-ink/15 bg-white text-ink hover:border-ink/40"
                     }`}
                   >
                     <span
@@ -224,8 +224,8 @@ export function BookingForm({
                           onClick={() => setSelectedSlot(slot)}
                           className={`min-h-12 w-20 rounded-xl border font-semibold tabular-nums transition-colors ${
                             isSelected
-                              ? "border-(--accent) bg-(--accent) text-night"
-                              : "border-white/15 bg-night-raised text-white hover:border-white/40"
+                              ? "border-(--accent) bg-(--accent) text-ink"
+                              : "border-ink/15 bg-white text-ink hover:border-ink/40"
                           }`}
                         >
                           {slot}
@@ -237,7 +237,7 @@ export function BookingForm({
               </div>
             ))
           ) : (
-            <p className="rounded-2xl bg-white/5 p-6 text-center text-sm text-white/60">
+            <p className="rounded-2xl bg-ink/5 p-6 text-center text-sm text-ink/60">
               No hay horarios disponibles para este día.
             </p>
           )}
@@ -245,7 +245,7 @@ export function BookingForm({
 
         <section
           aria-labelledby="customer-title"
-          className="flex flex-col gap-4 rounded-3xl border border-white/10 bg-night-raised p-5 md:p-6"
+          className="flex flex-col gap-4 rounded-3xl border border-ink/10 bg-white p-5 md:p-6"
         >
           <h2 id="customer-title" className="text-lg font-bold">
             Tus datos
@@ -287,7 +287,7 @@ export function BookingForm({
             <label className="flex flex-col gap-1.5 text-sm font-medium md:col-span-2">
               <span>
                 Email{" "}
-                <span className="font-normal text-white/40">(opcional)</span>
+                <span className="font-normal text-ink/40">(opcional)</span>
               </span>
               <input
                 type="email"
@@ -310,7 +310,7 @@ export function BookingForm({
 
       <aside
         aria-labelledby="summary-title"
-        className="flex flex-col gap-4 rounded-3xl border border-white/10 bg-night-raised p-5 md:p-6 lg:sticky lg:top-6"
+        className="flex flex-col gap-4 rounded-3xl border border-ink/10 bg-white p-5 md:p-6 lg:sticky lg:top-6"
       >
         <h2 id="summary-title" className="text-lg font-bold">
           Resumen
@@ -321,7 +321,7 @@ export function BookingForm({
               key={row.label}
               className="flex items-baseline justify-between gap-4"
             >
-              <dt className="text-white/60">{row.label}</dt>
+              <dt className="text-ink/60">{row.label}</dt>
               <dd className="text-right font-semibold first-letter:uppercase">
                 {row.value}
               </dd>
@@ -329,7 +329,7 @@ export function BookingForm({
           ))}
         </dl>
 
-        <div className="flex flex-col gap-1 rounded-2xl bg-white/5 p-4">
+        <div className="flex flex-col gap-1 rounded-2xl bg-ink/5 p-4">
           <div className="flex items-baseline justify-between gap-4">
             <span className="text-sm font-semibold">Seña para confirmar</span>
             <span className="text-xl font-bold">
@@ -337,7 +337,7 @@ export function BookingForm({
             </span>
           </div>
           {remainingAmount > 0 && (
-            <p className="text-xs text-white/60">
+            <p className="text-xs text-ink/60">
               Los {formatArs(remainingAmount)} restantes los pagás en el salón.
             </p>
           )}
@@ -346,7 +346,7 @@ export function BookingForm({
         <button
           type="submit"
           disabled={!canContinue}
-          className="flex min-h-12 w-full items-center justify-center rounded-xl bg-(--accent) px-8 font-semibold text-night transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+          className="flex min-h-12 w-full items-center justify-center rounded-xl bg-(--accent) px-8 font-semibold text-ink transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
         >
           Continuar
         </button>

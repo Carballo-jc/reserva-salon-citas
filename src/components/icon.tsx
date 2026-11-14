@@ -109,7 +109,7 @@ type IconProps = {
   className?: string;
 };
 
-/** Decorative stroke icon. Size and color come from `className` (e.g. "size-5 text-white"). */
+/** Decorative stroke icon. Size and color come from `className` (e.g. "size-5 text-ink"). */
 export function Icon({ name, className }: IconProps) {
   return (
     <svg

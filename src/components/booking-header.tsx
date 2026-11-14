@@ -25,7 +25,7 @@ export function BookingHeader({
 
   return (
     <header className="flex flex-col gap-5">
-      <div className="flex items-center justify-between gap-4 border-b border-white/10 pb-5">
+      <div className="flex items-center justify-between gap-4 border-b border-ink/10 pb-5">
         <Link
           to={`/${business.slug}`}
           className="flex min-h-12 min-w-0 items-center gap-3"
@@ -39,7 +39,7 @@ export function BookingHeader({
           ) : (
             <span
               aria-hidden
-              className="flex size-10 shrink-0 items-center justify-center rounded-full bg-(--accent) font-bold text-night"
+              className="flex size-10 shrink-0 items-center justify-center rounded-full bg-(--accent) font-bold text-ink"
             >
               {business.name.charAt(0)}
             </span>
@@ -47,7 +47,7 @@ export function BookingHeader({
           <span className="flex min-w-0 flex-col">
             <span className="truncate font-semibold">{business.name}</span>
             {business.address && (
-              <span className="truncate text-sm text-white/60">
+              <span className="truncate text-sm text-ink/60">
                 {business.address}
               </span>
             )}
@@ -58,7 +58,7 @@ export function BookingHeader({
             href={`https://wa.me/${business.whatsapp}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex min-h-12 shrink-0 items-center gap-2 text-sm font-semibold text-(--accent)"
+            className="flex min-h-12 shrink-0 items-center gap-2 text-sm font-semibold text-gold"
           >
             <Icon name="whatsapp" className="size-5 md:hidden" />
             <span className="hidden md:inline">
@@ -70,7 +70,7 @@ export function BookingHeader({
 
       <Link
         to={backHref}
-        className="-ml-2 flex min-h-12 items-center gap-2 self-start px-2 text-sm font-semibold text-white/70 transition-colors hover:text-white"
+        className="-ml-2 flex min-h-12 items-center gap-2 self-start px-2 text-sm font-semibold text-ink/70 transition-colors hover:text-ink"
       >
         <Icon name="arrow-left" className="size-5" />
         Volver
@@ -87,16 +87,16 @@ export function BookingHeader({
               className={`flex min-h-14 min-w-0 items-center gap-3 rounded-2xl border px-4 md:flex-1 ${
                 isCurrent
                   ? "flex-1 border-(--accent) bg-(--accent)/10"
-                  : "border-transparent bg-white/5"
+                  : "border-transparent bg-ink/5"
               }`}
             >
               <span
                 className={`flex size-7 shrink-0 items-center justify-center rounded-full text-sm font-bold ${
                   isDone
-                    ? "bg-emerald-500 text-night"
+                    ? "bg-emerald-600 text-white"
                     : isCurrent
-                      ? "bg-(--accent) text-night"
-                      : "bg-white/10 text-white/70"
+                      ? "bg-(--accent) text-ink"
+                      : "bg-ink/10 text-ink/70"
                 }`}
               >
                 {isDone ? (
@@ -109,7 +109,7 @@ export function BookingHeader({
               <span
                 className={`min-w-0 flex-col ${isCurrent ? "flex" : "hidden md:flex"}`}
               >
-                <span className="text-xs text-white/60">
+                <span className="text-xs text-ink/60">
                   Paso {step.number}
                 </span>
                 <span className="truncate text-sm font-semibold">

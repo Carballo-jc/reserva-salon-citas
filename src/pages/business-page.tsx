@@ -7,7 +7,7 @@ import { formatArs, getDepositAmount } from "@/utils/money";
 const ALL_CATEGORIES_ID = "todos";
 
 const SOCIAL_LINK_CLASS =
-  "flex min-h-12 items-center rounded-full border border-white/20 px-5 text-sm font-semibold text-(--accent) transition-colors hover:border-(--accent)/60";
+  "flex min-h-12 items-center rounded-full border border-ink/20 px-5 text-sm font-semibold text-gold transition-colors hover:border-(--accent)/60";
 
 /** Public page of the business: branding plus the services grouped by category. */
 export function BusinessPage() {
@@ -40,7 +40,7 @@ export function BusinessPage() {
 
   return (
     <main className="flex flex-col gap-8 md:gap-10">
-      <header className="flex flex-col gap-6 border-b border-white/10 pb-8 md:flex-row md:items-end md:justify-between">
+      <header className="flex flex-col gap-6 border-b border-ink/10 pb-8 md:flex-row md:items-end md:justify-between">
         <div className="flex flex-col gap-3">
           {business.address && (
             <p className="text-xs font-semibold tracking-[0.2em] text-gold uppercase">
@@ -51,7 +51,7 @@ export function BusinessPage() {
             {business.name}
           </h1>
           {business.description && (
-            <p className="text-white/70 md:text-lg">{business.description}</p>
+            <p className="text-ink/70 md:text-lg">{business.description}</p>
           )}
         </div>
         {(business.instagram || business.whatsapp) && (
@@ -96,8 +96,8 @@ export function BusinessPage() {
                   onClick={() => setSelectedCategoryId(category.id)}
                   className={`min-h-12 rounded-full border px-5 text-sm font-semibold whitespace-nowrap transition-colors ${
                     isSelected
-                      ? "border-white bg-white text-night"
-                      : "border-white/20 text-white hover:border-white/50"
+                      ? "border-ink bg-ink text-cream"
+                      : "border-ink/20 text-ink hover:border-ink/50"
                   }`}
                 >
                   {category.name}
@@ -117,13 +117,13 @@ export function BusinessPage() {
             return (
               <li
                 key={service.id}
-                className="flex flex-col gap-4 rounded-3xl border border-white/10 bg-night-raised p-5 md:p-6"
+                className="flex flex-col gap-4 rounded-3xl border border-ink/10 bg-white p-5 md:p-6"
               >
                 <div className="flex items-center justify-between gap-4 text-xs">
                   <span className="font-semibold tracking-[0.15em] text-gold uppercase">
                     {categoryNameById.get(service.categoryId)}
                   </span>
-                  <span className="text-sm text-white/60">
+                  <span className="text-sm text-ink/60">
                     {service.durationMin} min
                   </span>
                 </div>
@@ -134,7 +134,7 @@ export function BusinessPage() {
                   <span className="text-xl font-bold">
                     {formatArs(service.price)}
                   </span>
-                  <span className="text-sm whitespace-nowrap text-white/60">
+                  <span className="text-sm whitespace-nowrap text-ink/60">
                     {depositAmount > 0
                       ? `Seña ${formatArs(depositAmount)}`
                       : "Sin seña"}
@@ -142,7 +142,7 @@ export function BusinessPage() {
                 </div>
                 <Link
                   to={`/${business.slug}/reservar/${service.id}`}
-                  className="flex min-h-12 items-center justify-center rounded-xl bg-(--accent) px-6 font-semibold text-night transition-opacity hover:opacity-90"
+                  className="flex min-h-12 items-center justify-center rounded-xl bg-(--accent) px-6 font-semibold text-ink transition-opacity hover:opacity-90"
                 >
                   Reservar turno
                 </Link>
@@ -152,7 +152,7 @@ export function BusinessPage() {
         </ul>
       </section>
 
-      <ul className="flex flex-col gap-3 border-t border-white/10 pt-6 text-sm text-white/70 md:flex-row md:gap-8">
+      <ul className="flex flex-col gap-3 border-t border-ink/10 pt-6 text-sm text-ink/70 md:flex-row md:gap-8">
         {highlights.map((highlight) => (
           <li key={highlight.text} className="flex items-center gap-2">
             <Icon name={highlight.icon} className="size-4 shrink-0 text-gold" />

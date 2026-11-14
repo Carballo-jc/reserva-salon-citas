@@ -80,7 +80,7 @@ export function DepositSummaryPage() {
 
       <section
         aria-labelledby="summary-title"
-        className="mx-auto flex w-full max-w-xl flex-col gap-5 rounded-3xl border border-white/10 bg-night-raised p-5 md:p-8"
+        className="mx-auto flex w-full max-w-xl flex-col gap-5 rounded-3xl border border-ink/10 bg-white p-5 md:p-8"
       >
         <h1 id="summary-title" className="font-serif text-3xl font-semibold">
           Resumen de tu turno
@@ -92,7 +92,7 @@ export function DepositSummaryPage() {
               key={row.label}
               className="flex items-baseline justify-between gap-4"
             >
-              <dt className="text-white/60">{row.label}</dt>
+              <dt className="text-ink/60">{row.label}</dt>
               <dd className="text-right font-semibold first-letter:uppercase">
                 {row.value}
               </dd>
@@ -100,21 +100,21 @@ export function DepositSummaryPage() {
           ))}
         </dl>
 
-        <div className="flex flex-col gap-1 rounded-2xl bg-white/5 p-4">
+        <div className="flex flex-col gap-1 rounded-2xl bg-ink/5 p-4">
           <div className="flex items-baseline justify-between gap-4">
             <span className="font-semibold">Seña a pagar</span>
-            <span className="text-2xl font-bold text-(--accent)">
+            <span className="text-2xl font-bold text-gold">
               {formatArs(depositAmount)}
             </span>
           </div>
           {remainingAmount > 0 && (
-            <p className="text-xs text-white/60">
+            <p className="text-xs text-ink/60">
               Los {formatArs(remainingAmount)} restantes los pagás en el salón.
             </p>
           )}
         </div>
 
-        <p className="flex gap-3 text-sm text-white/60">
+        <p className="flex gap-3 text-sm text-ink/60">
           <Icon name="shield-check" className="size-5 shrink-0 text-gold" />
           <span>
             Podés reprogramar sin perder la seña hasta {business.cancelHours}{" "}

@@ -38,13 +38,13 @@ export function DepositPayment({
       <div className="flex flex-col gap-4">
         <p
           role="alert"
-          className="rounded-2xl bg-white/5 p-4 text-center text-sm font-medium text-white/80"
+          className="rounded-2xl bg-ink/5 p-4 text-center text-sm font-medium text-ink/80"
         >
           Se agotó el tiempo y el horario se liberó.
         </p>
         <Link
           to={chooseTimeHref}
-          className="flex min-h-12 w-full items-center justify-center rounded-xl border border-(--accent) px-8 font-semibold text-(--accent)"
+          className="flex min-h-12 w-full items-center justify-center rounded-xl border border-(--accent) px-8 font-semibold text-gold"
         >
           Elegir otro horario
         </Link>
@@ -54,7 +54,7 @@ export function DepositPayment({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between gap-4 rounded-2xl bg-(--accent)/10 p-4 text-(--accent)">
+      <div className="flex items-center justify-between gap-4 rounded-2xl bg-(--accent)/10 p-4 text-gold">
         <span className="flex items-center gap-2 text-sm font-medium">
           <Icon name="clock" className="size-5 shrink-0" />
           Te guardamos el horario por
@@ -77,7 +77,7 @@ export function DepositPayment({
       </button>
 
       {isPaymentUnavailable && (
-        <p role="status" className="text-center text-sm text-white/60">
+        <p role="status" className="text-center text-sm text-ink/60">
           El pago con Mercado Pago todavía no está conectado.
         </p>
       )}
