@@ -2,11 +2,13 @@
 -- Loaded by `supabase db reset`. Never runs against a hosted project.
 
 insert into public.businesses
-  (id, slug, name, description, color, address, instagram, whatsapp)
+  (id, slug, name, description, color, address, instagram, whatsapp, panel_pin_hash)
 values
   ('11111111-1111-4111-8111-111111111111', 'salon-demo', 'Salón Demo',
    'Uñas, color y cejas. Reservá online y asegurá tu lugar con una seña.',
-   '#d4af6a', 'Av. Santa Fe 2450, CABA', 'salondemo', '5491112345678');
+   '#d4af6a', 'Av. Santa Fe 2450, CABA', 'salondemo', '5491112345678',
+   -- Panel PIN for local development: 1234
+   extensions.crypt('1234', extensions.gen_salt('bf')));
 
 insert into public.service_categories (id, business_id, name, position) values
   ('22222222-2222-4222-8222-000000000001', '11111111-1111-4111-8111-111111111111', 'Uñas', 0),

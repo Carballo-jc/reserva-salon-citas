@@ -1,9 +1,11 @@
-import type { CSSProperties } from "react";
+import { useState, type CSSProperties } from "react";
 import { Link, NavLink, Outlet } from "react-router";
 import { LoadStatus } from "@/components/load-status";
 import { NotFound } from "@/components/not-found";
+import { PanelPinGate } from "@/components/panel-pin-gate";
 import { usePublicBusiness } from "@/hooks/use-public-business";
 import { DEFAULT_BUSINESS_SLUG } from "@/lib/public-business";
+import { readPanelUnlocked, savePanelUnlocked } from "@/utils/panel-session";
 
 const NAV_ITEMS = [{ to: "/panel/servicios", label: "Servicios" }];
 
@@ -11,6 +13,14 @@ const NAV_ITEMS = [{ to: "/panel/servicios", label: "Servicios" }];
 export function PanelLayout() {
   // Temporary: there is no sign-in yet, so the panel always opens the sample business.
   const state = usePublicBusiness(DEFAULT_BUSINESS_SLUG);
+  const [isUnlocked, setIsUnlocked] = useState(() =>
+    readPanelUnlocked(DEFAULT_BUSINESS_SLUG),
+  );
+
+  function handleSetUnlocked(nextIsUnlocked: boolean) {
+    savePanelUnlocked(DEFAULT_BUSINESS_SLUG, nextIsUnlocked);
+    setIsUnlocked(nextIsUnlocked);
+  }
 
   if (state.status === "loading") return <LoadStatus />;
   if (state.status === "error") return <LoadStatus onRetry={state.retry} />;
@@ -19,6 +29,21 @@ export function PanelLayout() {
   if (!business) return <NotFound />;
 
   const accentStyle = { "--accent": business.color } as CSSProperties;
+
+  if (!isUnlocked) {
+    return (
+      <div
+        style={accentStyle}
+        className="flex flex-1 flex-col bg-cream font-sans text-ink"
+      >
+        <title>{`Panel · ${business.name}`}</title>
+        <PanelPinGate
+          business={business}
+          onUnlock={() => handleSetUnlocked(true)}
+        />
+      </div>
+    );
+  }
 
   return (
     <div
@@ -42,12 +67,21 @@ export function PanelLayout() {
               </span>
             </span>
           </div>
-          <Link
-            to={`/${business.slug}`}
-            className="flex min-h-12 items-center text-sm font-semibold text-gold"
-          >
-            Ver página pública
-          </Link>
+          <div className="flex items-center gap-5">
+            <Link
+              to={`/${business.slug}`}
+              className="flex min-h-12 items-center text-sm font-semibold text-gold"
+            >
+              Ver página pública
+            </Link>
+            <button
+              type="button"
+              onClick={() => handleSetUnlocked(false)}
+              className="flex min-h-12 items-center text-sm font-semibold text-ink/60 transition-colors hover:text-ink"
+            >
+              Salir
+            </button>
+          </div>
         </div>
         <nav
           aria-label="Secciones del panel"
