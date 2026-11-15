@@ -1,4 +1,5 @@
 import type { IconName } from "@/components/icon";
+import { supabase } from "@/lib/supabase";
 
 export type DepositType = "percent" | "fixed";
 
@@ -23,6 +24,8 @@ export type PublicService = {
 export type PublicStaff = {
   id: string;
   name: string;
+  /** Services this professional performs. */
+  serviceIds: string[];
 };
 
 /** Value of the `profesional` query param when the customer has no preference. */
@@ -51,104 +54,83 @@ export type PublicBusiness = {
 /** Business opened from the root path while there is no landing page. */
 export const DEFAULT_BUSINESS_SLUG = "salon-demo";
 
-// Temporary sample data so the public UI can be reviewed before the database
-// is connected. Replace the body of getPublicBusiness with the real query.
-const SAMPLE_BUSINESSES: PublicBusiness[] = [
-  {
-    slug: DEFAULT_BUSINESS_SLUG,
-    name: "Salón Demo",
-    description:
-      "Uñas, color y cejas. Reservá online y asegurá tu lugar con una seña.",
-    logoUrl: null,
-    coverUrl: null,
-    color: "#d4af6a",
-    address: "Av. Santa Fe 2450, CABA",
-    instagram: "salondemo",
-    whatsapp: "5491112345678",
-    cancelHours: 24,
-    holdMinutes: 15,
-    categories: [
-      { id: "unas", name: "Uñas", icon: "sparkles" },
-      { id: "cabello", name: "Cabello", icon: "scissors" },
-      { id: "cejas-pestanas", name: "Cejas y pestañas", icon: "eye" },
-      { id: "maquillaje", name: "Maquillaje", icon: "heart" },
-    ],
-    services: [
-      {
-        id: "semipermanente",
-        categoryId: "unas",
-        name: "Esmaltado semipermanente",
-        durationMin: 60,
-        price: 1500000,
-        depositType: "percent",
-        depositValue: 30,
-      },
-      {
-        id: "esculpidas",
-        categoryId: "unas",
-        name: "Uñas esculpidas",
-        durationMin: 120,
-        price: 2800000,
-        depositType: "percent",
-        depositValue: 30,
-      },
-      {
-        id: "corte-brushing",
-        categoryId: "cabello",
-        name: "Corte y brushing",
-        durationMin: 60,
-        price: 1800000,
-        depositType: "percent",
-        depositValue: 30,
-      },
-      {
-        id: "coloracion",
-        categoryId: "cabello",
-        name: "Coloración",
-        durationMin: 120,
-        price: 4500000,
-        depositType: "percent",
-        depositValue: 30,
-      },
-      {
-        id: "perfilado-cejas",
-        categoryId: "cejas-pestanas",
-        name: "Perfilado de cejas",
-        durationMin: 30,
-        price: 900000,
-        depositType: "fixed",
-        depositValue: 300000,
-      },
-      {
-        id: "lifting-pestanas",
-        categoryId: "cejas-pestanas",
-        name: "Lifting de pestañas",
-        durationMin: 60,
-        price: 2200000,
-        depositType: "percent",
-        depositValue: 30,
-      },
-      {
-        id: "maquillaje-social",
-        categoryId: "maquillaje",
-        name: "Maquillaje social",
-        durationMin: 60,
-        price: 2500000,
-        depositType: "percent",
-        depositValue: 30,
-      },
-    ],
-    staff: [
-      { id: "sofia", name: "Sofía" },
-      { id: "valentina", name: "Valentina" },
-      { id: "camila", name: "Camila" },
-    ],
-  },
-];
+/** Accent used when the business has not chosen a color. */
+const DEFAULT_ACCENT_COLOR = "#d4af6a";
 
-/** Returns the active services and professionals of a business, or null if the slug does not exist. */
-export function getPublicBusiness(slug: string): PublicBusiness | null {
-  return SAMPLE_BUSINESSES.find((business) => business.slug === slug) ?? null;
+/** Row shape returned by the `get_public_business` database function. */
+type PublicBusinessRow = {
+  slug: string;
+  name: string;
+  description: string | null;
+  logo_url: string | null;
+  cover_url: string | null;
+  color: string | null;
+  address: string | null;
+  instagram: string | null;
+  whatsapp: string | null;
+  cancel_hours: number;
+  hold_minutes: number;
+  categories: { id: string; name: string }[];
+  services: {
+    id: string;
+    category_id: string;
+    name: string;
+    duration_min: number;
+    price: number;
+    deposit_type: DepositType;
+    deposit_value: number;
+  }[];
+  staff: { id: string; name: string; service_ids: string[] }[];
+};
+
+function toPublicBusiness(row: PublicBusinessRow): PublicBusiness {
+  return {
+    slug: row.slug,
+    name: row.name,
+    description: row.description,
+    logoUrl: row.logo_url,
+    coverUrl: row.cover_url,
+    color: row.color ?? DEFAULT_ACCENT_COLOR,
+    address: row.address,
+    instagram: row.instagram,
+    whatsapp: row.whatsapp,
+    cancelHours: row.cancel_hours,
+    holdMinutes: row.hold_minutes,
+    // Categories have no icon in the database; the public pages do not show one.
+    categories: row.categories.map((category) => ({
+      ...category,
+      icon: "sparkles",
+    })),
+    services: row.services.map((service) => ({
+      id: service.id,
+      categoryId: service.category_id,
+      name: service.name,
+      durationMin: service.duration_min,
+      price: service.price,
+      depositType: service.deposit_type,
+      depositValue: service.deposit_value,
+    })),
+    staff: row.staff.map((member) => ({
+      id: member.id,
+      name: member.name,
+      serviceIds: member.service_ids,
+    })),
+  };
+}
+
+/**
+ * Loads what the public page of a business shows: its details, categories,
+ * active services and active professionals. Resolves to null if the slug does
+ * not exist and rejects when the request fails.
+ */
+export async function fetchPublicBusiness(
+  slug: string,
+): Promise<PublicBusiness | null> {
+  const { data, error } = await supabase.rpc("get_public_business", {
+    p_slug: slug,
+  });
+  if (error) throw error;
+  return data ? toPublicBusiness(data as PublicBusinessRow) : null;
 }
 
 export type AvailableDay = {
