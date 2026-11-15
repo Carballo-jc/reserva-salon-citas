@@ -1,14 +1,21 @@
 import type { CSSProperties } from "react";
 import { Link, NavLink, Outlet } from "react-router";
+import { LoadStatus } from "@/components/load-status";
 import { NotFound } from "@/components/not-found";
-import { DEFAULT_BUSINESS_SLUG, getPublicBusiness } from "@/lib/public-business";
+import { usePublicBusiness } from "@/hooks/use-public-business";
+import { DEFAULT_BUSINESS_SLUG } from "@/lib/public-business";
 
 const NAV_ITEMS = [{ to: "/panel/servicios", label: "Servicios" }];
 
 /** Shell of the owner panel: business bar, section navigation and page content. */
 export function PanelLayout() {
   // Temporary: there is no sign-in yet, so the panel always opens the sample business.
-  const business = getPublicBusiness(DEFAULT_BUSINESS_SLUG);
+  const state = usePublicBusiness(DEFAULT_BUSINESS_SLUG);
+
+  if (state.status === "loading") return <LoadStatus />;
+  if (state.status === "error") return <LoadStatus onRetry={state.retry} />;
+
+  const { business } = state;
   if (!business) return <NotFound />;
 
   const accentStyle = { "--accent": business.color } as CSSProperties;
