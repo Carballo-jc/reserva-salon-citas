@@ -41,7 +41,7 @@ export function ChooseStaffPage() {
           <h1 id="staff-title" className="font-serif text-3xl font-semibold">
             Elegí profesional
           </h1>
-          <p className="text-sm text-white/60">
+          <p className="text-sm text-ink/60">
             {service.name} · {service.durationMin} min
           </p>
         </div>
@@ -51,11 +51,11 @@ export function ChooseStaffPage() {
             <li key={staff.id}>
               <Link
                 to={`${schedulePath}?profesional=${staff.id}`}
-                className="flex min-h-20 items-center gap-4 rounded-2xl border border-white/10 bg-night-raised p-4 transition-colors hover:border-(--accent)/60"
+                className="flex min-h-20 items-center gap-4 rounded-2xl border border-ink/10 bg-white p-4 transition-colors hover:border-(--accent)/60"
               >
                 <span
                   aria-hidden
-                  className="flex size-12 shrink-0 items-center justify-center rounded-full bg-(--accent)/15 text-lg font-bold text-(--accent)"
+                  className="flex size-12 shrink-0 items-center justify-center rounded-full bg-(--accent)/15 text-lg font-bold text-gold"
                 >
                   {staff.id === ANY_STAFF_ID ? (
                     <Icon name="star" className="size-5" />
@@ -68,7 +68,7 @@ export function ChooseStaffPage() {
                 </span>
                 <Icon
                   name="chevron-right"
-                  className="size-5 shrink-0 text-white/40"
+                  className="size-5 shrink-0 text-ink/40"
                 />
               </Link>
             </li>

@@ -24,12 +24,12 @@ export function BusinessLayout() {
   return (
     <div
       style={accentStyle}
-      className="flex flex-1 flex-col bg-night font-sans text-white"
+      className="flex flex-1 flex-col bg-cream font-sans text-ink"
     >
       <title>{`${business.name} · Turnos`}</title>
       <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-4 py-6 md:px-8 md:py-12">
         <Outlet context={business} />
-        <footer className="mt-auto pt-10 text-center text-xs text-white/40">
+        <footer className="mt-auto pt-10 text-center text-xs text-ink/40">
           Hecho con {APP_NAME}
         </footer>
       </div>

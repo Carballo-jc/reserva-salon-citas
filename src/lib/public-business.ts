@@ -61,7 +61,7 @@ const SAMPLE_BUSINESSES: PublicBusiness[] = [
       "Uñas, color y cejas. Reservá online y asegurá tu lugar con una seña.",
     logoUrl: null,
     coverUrl: null,
-    color: "#f47fab",
+    color: "#d4af6a",
     address: "Av. Santa Fe 2450, CABA",
     instagram: "salondemo",
     whatsapp: "5491112345678",

@@ -2,9 +2,10 @@
 
 @theme {
   --font-serif: "Playfair Display Variable", ui-serif, Georgia, serif;
-  --color-night: #16101a;
-  --color-night-raised: #211827;
-  --color-gold: #e2b877;
+  --color-cream: #fbf7f0;
+  --color-ink: #2a2118;
+  /* Dark gold for text and icons; fills use the accent color of the business. */
+  --color-gold: #8c6a24;
   /* Mercado Pago brand blue, used only on its payment button. */
   --color-mp: #0a6cb4;
 }
@@ -16,7 +17,7 @@ body,
 }
 
 body {
-  background-color: var(--color-night);
+  background-color: var(--color-cream);
 }
 
 #root {
